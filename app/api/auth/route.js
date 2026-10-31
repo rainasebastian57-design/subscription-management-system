@@ -1,5 +1,3 @@
-import { hashPassword } from '@/lib/auth';
-
 export async function POST(request) {
   try {
     const body = await request.json();
