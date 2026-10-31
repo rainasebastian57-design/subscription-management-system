@@ -138,4 +138,3 @@ export function FilterLinks({ base, param = 'status', options, current }) {
     </div>
   );
 }
-Where
