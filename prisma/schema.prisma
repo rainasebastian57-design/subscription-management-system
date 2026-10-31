@@ -1,0 +1,29 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  passwordHash  String
+  role          String         @default("CUSTOMER") // ADMIN, STAFF, CUSTOMER
+  createdAt     DateTime       @default(now())
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id          String   @id @default(uuid())
+  userId      String
+  planName    String   // e.g., "Pro Plan", "Enterprise"
+  status      String   @default("ACTIVE") // ACTIVE, CANCELED, PAST_DUE
+  amount      Float
+  renewalDate DateTime
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
